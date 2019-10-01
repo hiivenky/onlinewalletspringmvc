@@ -68,7 +68,7 @@ public class WalletUserServiceImpl implements WalletUserService {
 
         Validate.validateDate(date2);
         WalletUser user = dao.getUser(userId);
-		return dao.getTransactions(user.getAccount().getAccountNo());
+		return dao.getTransactions(user.getAccount().getAccountNo(),date1,date2);
 	}
 
 	@Override

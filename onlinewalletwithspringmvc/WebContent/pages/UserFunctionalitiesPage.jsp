@@ -116,7 +116,7 @@ System.out.println(user.getPhoneNo());
 Cookie cookies[] = request.getCookies() ;
 boolean flag=false;
    for(Cookie c : cookies){
-	   if(c.getName().equals(user.getUserId()+"")){
+	   if(c.getName().equals("status")){
 		  if(c.getValue().equals("loggedin")){
 			  flag=true;
 			  break;
@@ -198,6 +198,24 @@ boolean flag=false;
     </div>
 
 </center>
+<div class="signup-form" style="margin-top:50px">
+    <form action="getTransactionsPage" method="post">
+        <div class="form-group">
+        	<input type="date" data-date-format="YYYY/MM/DD" class="form-control" name="fromDate" placeholder="yyyy/MM/dd" required="required"/>
+        </div>
+		<div class="form-group">
+            <input type="date" data-date-format="yyyy/MM/dd" class="form-control" name="toDate" placeholder="yyyy/MM/dd" required="required"/>
+<div class="form-group">
+</div>
+<div style="margin-top: 60px">
+            <button type="submit" value="Transfer" class="btn btn-success btn-md btn-block"/>Get Transactions</button>
+     </div>
+        </div>
+        </form>
+
+
+
+</div>
 
 <div style="margin-top: 10px">
 <a href="signOut"><button type="button" class="btn btn-outline-dark btn-med" >SignOut</button></a>

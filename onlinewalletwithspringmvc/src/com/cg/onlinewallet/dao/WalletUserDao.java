@@ -1,6 +1,7 @@
 package com.cg.onlinewallet.dao;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.cg.onlinewallet.dto.TransactionHistory;
@@ -16,7 +17,8 @@ public interface WalletUserDao {
 	public Double checkBalance(Integer userId);
 	public List<WalletUser>getAllUsers();
 	public WalletUser getUser(Integer userId);
-	public List<TransactionHistory> getTransactions(Integer accountId);
+	public List<TransactionHistory> getTransactions(Integer accountId
+			,LocalDateTime fromDate,LocalDateTime toDate);
 	public List<WalletAccount> getAccountsToApprove();
 	public WalletAccount approveAccount(Integer accountId);
 	public WalletAccount getAccount(Integer accountNo);

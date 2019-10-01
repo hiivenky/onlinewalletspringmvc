@@ -18,6 +18,21 @@
 WalletUser user=(WalletUser)request.getAttribute("user");
 session.setAttribute("user",user);
 System.out.println(user.getPhoneNo());
+Cookie cookies[] = request.getCookies() ;
+boolean flag=false;
+   for(Cookie c : cookies){
+	   if(c.getName().equals("status")){
+		   System.out.println(c.getValue());
+		  if(c.getValue().equals("loggedin")){
+			  flag=true;
+			  break;
+		  }
+	   }
+   }
+   if(!flag){
+	   System.out.println("hii");
+	   response.sendRedirect("login");
+   }
 
 
 %>

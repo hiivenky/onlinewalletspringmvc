@@ -43,7 +43,7 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		transactionHistory.setAmount(amount);
 		user.getAccount().setBalance(amount+user.getAccount().getBalance());
 		transactionHistory.setBalance(user.getAccount().getBalance());
-	//	transaction.setDateOfTransaction(LocalDateTime.now());
+		transactionHistory.setDateOfTransaction(LocalDateTime.now());
 		transactionHistory.setAccount(em.find(WalletAccount.class, user.getAccount().getAccountNo()));
 		transactionHistory.setDescription("myself");
 		//em.merge(user);
@@ -67,7 +67,7 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		transactionHistory.setAccount(fromUser.getAccount());
 		transactionHistory.setBalance(fromUser.getAccount().getBalance());
 		transactionHistory.setAmount(amount);
-	//	transaction.setDateOfTransaction(LocalDateTime.now());
+		transactionHistory.setDateOfTransaction(LocalDateTime.now());
 		transactionHistory.setDescription("transferred to phone number "+phoneNumber);
 		em.merge(fromUser);
 		em.persist(transactionHistory);
@@ -77,7 +77,7 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		transaction1.setBalance(toUser.getAccount().getBalance());
 		transaction1.setAmount(amount);
 		transaction1.setDescription("received from "+fromUser.getPhoneNo());
-	//	transaction1.setDateOfTransaction(LocalDateTime.now());
+		transaction1.setDateOfTransaction(LocalDateTime.now());
 		//em.merge(toUser);
 		//em.merge(toUser.getAccount());
 		em.persist(transaction1);
@@ -95,7 +95,7 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		transactionHistory.setAccount(fromUser.getAccount());
 		transactionHistory.setBalance(fromUser.getAccount().getBalance());
 		transactionHistory.setAmount(amount);
-	//	transaction.setDateOfTransaction(LocalDateTime.now());
+		transactionHistory.setDateOfTransaction(LocalDateTime.now());
 		transactionHistory.setDescription("transferred to accountNo "+accountNo);
 		//em.merge(fromUser);
 		//em.merge(fromUser.getAccount());
@@ -124,7 +124,8 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		return em.find(WalletUser.class, userId);
 	}
 	
-	public List<TransactionHistory> getTransactions(Integer accountId){
+	public List<TransactionHistory> getTransactions(Integer accountId,LocalDateTime fromDate,
+			LocalDateTime toDate){
 		//em.refresh(TransactionHistory.class);
 //		WalletAccount account = em.find(WalletAccount.class, accountId);		
 //		return account.getTransactionList();
@@ -133,15 +134,16 @@ public class WalletUserDaoImpl implements WalletUserDao {
 		String sql = "select a from TransactionHistory a where a.walletAccount= :first";
 		Query query = em.createQuery(sql);
 		query.setParameter("first", account);
-		List<TransactionHistory> history =query.getResultList();
-		List<TransactionHistory> myTransactions = new ArrayList<TransactionHistory>();
-		for(int i=0;i<history.size();i++) {
-			if(history.get(i).getAccount().getAccountNo()==accountId) {
-				myTransactions.add(history.get(i));
-				
+		List<TransactionHistory> myTransactions = query.getResultList();
+		System.out.println(myTransactions.size()+" "+fromDate);
+		List<TransactionHistory> retTransactions = new ArrayList<TransactionHistory>();
+		for(int i=0;i<myTransactions.size();i++) {
+			if(myTransactions.get(i).getDateOfTransaction()!=null&&myTransactions.get(i).getDateOfTransaction().compareTo(fromDate)>=0
+			   &&myTransactions.get(i).getDateOfTransaction().compareTo(toDate)<=0) {
+				retTransactions.add(myTransactions.get(i));
 			}
 		}
-		return myTransactions;
+		return retTransactions;
 	}
 
 	@Override

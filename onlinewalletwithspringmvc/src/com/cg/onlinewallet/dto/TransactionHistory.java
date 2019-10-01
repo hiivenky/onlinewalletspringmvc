@@ -1,7 +1,7 @@
 package com.cg.onlinewallet.dto;
 
 import java.math.BigInteger;
-
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -21,7 +21,7 @@ public class TransactionHistory {
 	@GeneratedValue
 	private Integer transactionId;
 	private String description;
-	//private Date dateOfTransaction;
+	private LocalDateTime dateOfTransaction;
 	private Double amount;
 	private Double balance;
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
@@ -32,7 +32,7 @@ public class TransactionHistory {
 		
 	}
 
-	public TransactionHistory(String description, Integer transactionId, Date dateOfTransaction, Double amount,
+	public TransactionHistory(String description, Integer transactionId, LocalDateTime dateOfTransaction, Double amount,
 			Double balance, WalletAccount account) {
 		super();
 		this.description = description;
@@ -59,13 +59,13 @@ public class TransactionHistory {
 		this.transactionId = transactionId;
 	}
 
-//	public Date getDateOfTransaction() {
-//		return dateOfTransaction;
-//	}
-//
-//	public void setDateOfTransaction(Date dateOfTransaction) {
-//		this.dateOfTransaction = dateOfTransaction;
-//	}
+	public LocalDateTime getDateOfTransaction() {
+		return dateOfTransaction;
+	}
+
+	public void setDateOfTransaction(LocalDateTime dateOfTransaction) {
+		this.dateOfTransaction = dateOfTransaction;
+	}
 
 	public Double getAmount() {
 		return amount;
@@ -94,7 +94,7 @@ public class TransactionHistory {
 	@Override
 	public String toString() {
 		return "TransactionHistory [description=" + description + ", transactionId=" + transactionId 
-				+", amount=" + amount + ", balance=" + balance + ", account=" + walletAccount + "]";
+				+", amount=" + amount + ", balance=" + balance + "]";
 	}
 	
 	
