@@ -110,7 +110,6 @@
         <div class="form-group">
 			<div class="row">
 				<div class="col-xs-12"><registrationForm:input type="text" class="form-control" path="userName" placeholder= "Name" required="required"/></div>
-				
 			</div>        	
         </div>
         <div class="form-group">
@@ -123,7 +122,8 @@
             <registrationForm:input type="password" class="form-control" name="confirmpassword" path="" placeholder="Confirm Password" required="required"/>
         </div>        
 		<div class="form-group">
-            <registrationForm:button type="submit" value="Register Now" class="btn btn-danger btn-lg btn-block"/></button>
+		<registrationForm:errors path="userName"/><br><br>  
+            <registrationForm:input path="" type="submit" value="Register Now" class="btn btn-danger btn-lg btn-block"/>
         </div>
     </registrationForm:form>
 	<div class="text-center">Already have an account? <a href="login">Sign in</a></div>
